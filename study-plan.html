@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Plan | Next Week</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --notion-bg: #ffffff;
+            --notion-text: #37352f;
+            --notion-secondary-text: #64748b;
+            --notion-border: #e0e0e0;
+            --notion-hover: #f5f5f5;
+            --notion-tag-blue: #e8f1fd;
+            --notion-tag-blue-text: #0b6bcb;
+            --notion-tag-red: #fdebeb;
+            --notion-tag-red-text: #e03e3e;
+            --notion-tag-orange: #fff2e6;
+            --notion-tag-orange-text: #e8700a;
+            --notion-tag-green: #ddfbe9;
+            --notion-tag-green-text: #148a4f;
+            --notion-tag-purple: #f0e8fd;
+            --notion-tag-purple-text: #9747ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--notion-text);
+            background-color: var(--notion-bg);
+            line-height: 1.5;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            padding: 20px 0 10px;
+            border-bottom: 1px solid var(--notion-border);
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-description {
+            color: var(--notion-secondary-text);
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .database {
+            padding-bottom: 100px;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .filter-btn, .view-btn {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            border: 1px solid var(--notion-border);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--notion-secondary-text);
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .filter-btn:hover, .view-btn:hover {
+            background: var(--notion-hover);
+        }
+
+        .filter-btn i, .view-btn i {
+            margin-right: 6px;
+        }
+
+        .btn-new {
+            margin-left: auto;
+            background-color: var(--notion-text);
+            color: white;
+            border: none;
+        }
+
+        .btn-new:hover {
+            background-color: #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        th {
+            text-align: left;
+            padding: 8px 12px;
+            font-weight: 500;
+            color: var(--notion-secondary-text);
+            border-bottom: 1px solid var(--notion-border);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--notion-border);
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background-color: var(--notion-hover);
+        }
+
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--notion-border);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkbox.checked {
+            background-color: var(--notion-text);
+            border-color: var(--notion-text);
+            position: relative;
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: -2px;
+            left: 3px;
+        }
+
+        .task {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .task-content {
+            margin-left: 10px;
+            width: 100%;
+        }
+
+        .task-title {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .task-notes {
+            font-size: 13px;
+            color: var(--notion-secondary-text);
+        }
+
+        .task.completed .task-title {
+            text-decoration: line-through;
+            color: var(--notion-secondary-text);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 6px;
+        }
+
+        .tag.blue {
+            background-color: var(--notion-tag-blue);
+            color: var(--notion-tag-blue-text);
+        }
+
+        .tag.red {
+            background-color: var(--notion-tag-red);
+            color: var(--notion-tag-red-text);
+        }
+
+        .tag.green {
+            background-color: var(--notion-tag-green);
+            color: var(--notion-tag-green-text);
+        }
+
+        .tag.orange {
+            background-color: var(--notion-tag-orange);
+            color: var(--notion-tag-orange-text);
+        }
+
+        .tag.purple {
+            background-color: var(--notion-tag-purple);
+            color: var(--notion-tag-purple-text);
+        }
+
+        .priority {
+            display: flex;
+            align-items: center;
+        }
+
+        .priority i {
+            color: #ff7066;
+            margin-right: 5px;
+        }
+
+        .date {
+            color: var(--notion-secondary-text);
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 32px;
+            }
+            
+            table, thead, tbody, th, td, tr { 
+                display: block; 
+            }
+            
+            thead tr { 
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            tr { 
+                margin-bottom: 15px;
+                border: 1px solid var(--notion-border);
+                border-radius: 5px;
+            }
+            
+            td { 
+                border: none;
+                position: relative;
+                padding-left: 120px;
+                min-height: 40px;
+            }
+            
+            td:before { 
+                position: absolute;
+                top: 12px;
+                left: 12px;
+                width: 100px;
+                font-weight: 500;
+                color: var(--notion-secondary-text);
+            }
+            
+            td:nth-of-type(1):before { content: "Status"; }
+            td:nth-of-type(2):before { content: "Task"; }
+            td:nth-of-type(3):before { content: "Category"; }
+            td:nth-of-type(4):before { content: "Priority"; }
+            td:nth-of-type(5):before { content: "Due Date"; }
+        }
+    </style>
+</head>
+<body>
+    <div class="notion-page">
+        <header class="header">
+            <h1 class="page-title">📚 Study Plan: Next Week</h1>
+            <p class="page-description">React and Swift learning roadmap for next week</p>
+        </header>
+
+        <main class="database">
+            <div class="controls">
+                <button class="filter-btn"><i class="fas fa-filter"></i> Filter</button>
+                <button class="filter-btn"><i class="fas fa-sort"></i> Sort</button>
+                <button class="view-btn"><i class="fas fa-table"></i> Table view</button>
+                <button class="filter-btn btn-new"><i class="fas fa-plus"></i> New</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th width="50">Status</th>
+                        <th>Task</th>
+                        <th width="120">Category</th>
+                        <th width="100">Priority</th>
+                        <th width="120">Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Monday -->
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">React fundamentals: JSX and components</div>
+                                    <div class="task-notes">Complete React crash course on components, props, and JSX syntax</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag blue">React</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> High
+                            </div>
+                        </td>
+                        <td class="date">Monday</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Swift basics and syntax</div>
+                                    <div class="task-notes">Set up Xcode and learn basic Swift syntax, variables, and control flow</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag orange">Swift</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> High
+                            </div>
+                        </td>
+                        <td class="date">Monday</td>
+                    </tr>
+
+                    <!-- Tuesday -->
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">React state management and hooks</div>
+                                    <div class="task-notes">Learn useState, useEffect, and implement state management in small app</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag blue">React</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> High
+                            </div>
+                        </td>
+                        <td class="date">Tuesday</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Swift functions and closures</div>
+                                    <div class="task-notes">Create functions, understand closures, and practice through coding examples</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag orange">Swift</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> High
+                            </div>
+                        </td>
+                        <td class="date">Tuesday</td>
+                    </tr>
+
+                    <!-- Wednesday -->
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Build a React to-do list application</div>
+                                    <div class="task-notes">Practice components, state management, and event handling by building a to-do app</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag blue">React</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> High
+                            </div>
+                        </td>
+                        <td class="date">Wednesday</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Swift classes and structs</div>
+                                    <div class="task-notes">Learn object-oriented programming in Swift with classes, structs, and properties</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag orange">Swift</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> Medium
+                            </div>
+                        </td>
+                        <td class="date">Wednesday</td>
+                    </tr>
+
+                    <!-- Thursday -->
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">React routing with React Router</div>
+                                    <div class="task-notes">Set up multi-page navigation in a React application with React Router</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag blue">React</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> Medium
+                            </div>
+                        </td>
+                        <td class="date">Thursday</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">SwiftUI basics</div>
+                                    <div class="task-notes">Introduction to SwiftUI framework and building simple UI components</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag orange">Swift</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> High
+                            </div>
+                        </td>
+                        <td class="date">Thursday</td>
+                    </tr>
+
+                    <!-- Friday -->
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Fetching data in React with API calls</div>
+                                    <div class="task-notes">Use fetch or axios to make API calls and display data in React components</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag blue">React</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> Medium
+                            </div>
+                        </td>
+                        <td class="date">Friday</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Build a simple SwiftUI app</div>
+                                    <div class="task-notes">Create a basic iOS app with multiple screens using SwiftUI</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag orange">Swift</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> Medium
+                            </div>
+                        </td>
+                        <td class="date">Friday</td>
+                    </tr>
+
+                    <!-- Weekend -->
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Mini-project: React weather app</div>
+                                    <div class="task-notes">Build a weather app using React that displays forecast data from a public API</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag blue">React</span>
+                            <span class="tag green">Project</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> High
+                            </div>
+                        </td>
+                        <td class="date">Weekend</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Mini-project: iOS journal app</div>
+                                    <div class="task-notes">Create a simple journal/notes app using SwiftUI with basic storage functionality</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag orange">Swift</span>
+                            <span class="tag green">Project</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> High
+                            </div>
+                        </td>
+                        <td class="date">Weekend</td>
+                    </tr>
+
+                    <!-- Additional Resources -->
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Collect learning resources</div>
+                                    <div class="task-notes">Gather documentation, tutorials, and YouTube channels for both React and Swift</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag purple">Resources</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> Low
+                            </div>
+                        </td>
+                        <td class="date">Monday</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox"></div>
+                        </td>
+                        <td>
+                            <div class="task">
+                                <div class="task-content">
+                                    <div class="task-title">Join developer communities</div>
+                                    <div class="task-notes">Join React and Swift Discord servers or subreddits for community support</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag purple">Resources</span>
+                        </td>
+                        <td>
+                            <div class="priority">
+                                <i class="fas fa-flag"></i> Low
+                            </div>
+                        </td>
+                        <td class="date">Tuesday</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle checkbox clicks
+            const checkboxes = document.querySelectorAll('.checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    this.classList.toggle('checked');
+                    
+                    // Find the parent row and the task within it
+                    const row = this.closest('tr');
+                    const task = row.querySelector('.task');
+                    
+                    // Toggle completed class
+                    task.classList.toggle('completed');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
