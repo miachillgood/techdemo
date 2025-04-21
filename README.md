@@ -1,41 +1,31 @@
-# MIA's Developer Portfolio
+# Developer Portfolio
 
-A responsive developer portfolio website showcasing my projects, skills, and experience.
+A modern, responsive developer portfolio website showcasing projects and skills.
 
 ## Features
 
-- Responsive design that works on all devices
-- Clean and modern UI with glass-morphism effects
+- Responsive design for all devices
 - Project showcase with filtering capabilities
-- Skills and experience sections
+- Skills and expertise sections
 - Contact form
+- Modern UI with glass-morphism effects
 
 ## Technologies Used
 
 - HTML5
-- CSS3 (with custom variables and animations)
+- CSS3
 - JavaScript
-- Font Awesome for icons
+- Font Awesome icons
 - Google Fonts
-
-## Getting Started
-
-1. Clone the repository
-2. Open `index.html` in your browser
-3. Explore the portfolio!
 
 ## Preview
 
-The portfolio is designed with a modern aesthetic featuring:
-- Hero section with introduction
-- About section with personal information
-- Projects section with filter functionality
-- Skills showcase organized by category
-- Contact section with form
+The portfolio includes sections for:
+- About Me
+- Featured Projects
+- Technical Skills
+- Contact Information
 
-## Contact
+## Setup
 
-Feel free to reach out:
-- Email: mia.dev@example.com
-- GitHub: [github.com/mia-dev](https://github.com/mia-dev)
-- LinkedIn: [linkedin.com/in/mia-dev](https://linkedin.com/in/mia-dev) 
+Simply clone the repository and open index.html in your browser to view the portfolio. 
